@@ -1,10 +1,10 @@
   applications:
-  - name: djangoapp
+  - name: dealership
     routes:
       - route: myDealership.us-south.cf.appdomain.cloud
     memory: 128M
     buildpack: python_buildpack
-  - name: djangoapp-nginx
+  - name: dealership-nginx
     routes:
       - route: myDealership.us-south.cf.appdomain.cloud/static
     memory: 128M
