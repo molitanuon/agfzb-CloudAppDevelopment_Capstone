@@ -21,13 +21,13 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"> Dealership Review</a>
+                <a class="navbar-brand" href="#"> Dealership</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
-                {% if user.is_authenticated %}
+                {% if user.is_authenticated % }
                 <li>
                     <a class="btn btn-link" href="#">{{user.first_name}}({{user.username}})</a>
-                    <a class="btn btn-link" href="#"> Logout </a>
+                    <a class="btn btn-link" href="{% url 'djangoapp:logout' %}"> Logout </a>
                 </li>
                 {% else %}
                 <li>
@@ -50,8 +50,25 @@
         </div>
     </nav> 
 
-    <!--Add a dealer table here -->
-
+    <form action="{% url 'djangoapp:login' %}" method="post">
+        {% csrf_token %}
+        <div class="container"> <!--Style root div with .container class -->
+            <h1>Login</h1>
+            <div class="form-group"> <!--Style second div with .form-group class -->
+              <label for="username"><b>User Name</b></label>
+              <input id="username" class = "form-control" type="text" placeholder="Enter User Name: " name="username" required> <!--Style input with .form-control class -->
+              <label for="psw"><b>Password</b></label>
+              <input id="psw" class = "form-control" type="password"  placeholder="Enter Password: " name="psw" required> <!--Style input with .form-control class -->
+            </div>
+            {% if message %}
+              <div class="alert alert-warning"> <!--Style the message paragraph with .alert and .alert-warning class -->
+                {{ message }}
+              </div>
+            {% endif %}
+            <button class="btn btn-primary" type="submit">Login</button> <!--Style button with .btn and .btn-primary class -->
+        </div>
+    </form>
+    
     </body>
 
 </html>
