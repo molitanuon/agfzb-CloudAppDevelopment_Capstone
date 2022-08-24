@@ -103,8 +103,9 @@ def get_dealer_details(request, dealer_id):
     if request.method == "GET":
         url = "https://8779b430.us-south.apigw.appdomain.cloud/api/review?dealer_id=" + str(dealer_id)
         reviews = get_dealer_reviews_from_cf(url, dealer_id)
-        review_names = ' '.join([review.review for review in reviews])
-        return HttpResponse(review_names)
+        all_reviews = ' '.join([review.review + ": " + review.sentiment for review in reviews])
+        #all_sent = ' '.join([review.sentiment for review in reviews])
+        return HttpResponse(all_reviews)
 
 # Create a `add_review` view to submit a review
 # def add_review(request, dealer_id):
