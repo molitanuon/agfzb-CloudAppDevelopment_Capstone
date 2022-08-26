@@ -72,7 +72,7 @@ def get_dealer_reviews_from_cf(url, dealer_id):
         print(reviewers)
         for reviewer in reviewers:
             review_obj = DealerReview(dealership=reviewer["dealership"], name=reviewer["name"], purchase=reviewer["purchase"],
-                                   review=reviewer["review"], purchase_date=reviewer["purchase_date"], car_make=reviewer["car_make"],
+                                   review=reviewer["review"], purchase_date=reviewer["purchasedate"], car_make=reviewer["car_make"],
                                    car_model=reviewer["car_model"],
                                     car_year=reviewer["car_year"], sentiment="neutral", id=reviewer["id"])
             review_obj.sentiment = analyze_review_sentiments(review_obj.review)
@@ -86,23 +86,21 @@ def get_dealer_reviews_from_cf(url, dealer_id):
 # - Call get_request() with specified arguments
 # - Parse JSON results into a DealerView object list
 def get_dealer_by_id_from_cf(url, dealer_id):
-    results = []
     # Call get_request with a URL parameter
     json_result = get_request(url, dealer_id=dealer_id)
     if json_result:
         # Get the row list in JSON as dealers
         dealers = json_result["results"]["docs"]
         # For each dealer object
-        for dealer in dealers:
+        dealer = dealers[0]
             # Get its content in `doc` object
             #dealer_doc = dealer["docs"]
             # Create a CarDealer object with values in `doc` object
-            dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"],
-                                   id=dealer["id"], lat=dealer["lat"], long=dealer["long"],
-                                   short_name=dealer["short_name"],
-                                   st=dealer["st"], zip=dealer["zip"])
-            results.append(dealer_obj)
-    return results
+        dealer_obj = CarDealer(address=dealer["address"], city=dealer["city"], full_name=dealer["full_name"],
+                                id=dealer["id"], lat=dealer["lat"], long=dealer["long"],
+                                short_name=dealer["short_name"],
+                                st=dealer["st"], zip=dealer["zip"])
+    return dealer_obj
 
 
 # Create an `analyze_review_sentiments` method to call Watson NLU and analyze text
