@@ -144,15 +144,20 @@ def add_review(request, dealer_id):
             review["review"] = request.POST["content"]
             review["name"] = username
             review["purchase"] = False
+            review["car_make"] = ""
+            review["car_model"] = ""
+            review["car_year"] = 0
+            review["purchase_date"] = "mm/dd/yy"
+            review["id"] = dealer_id
+
             if "purchasecheck" in request.POST:
                 if request.POST["purchasecheck"] == 'on':
                     review["purchase"] = True
-            
-            review["car_make"] = car.car_make.name
-            review["car_model"] = car.name
-            review["car_year"] = int(car.year.strftime("%Y"))
-            review["purchase_date"] = request.POST["purchase_date"]
-            review["id"] = dealer_id
+                    review["car_make"] = car.car_make.name
+                    review["car_model"] = car.name
+                    review["car_year"] = int(car.year.strftime("%Y"))
+                    review["purchase_date"] = request.POST["purchase_date"]
+                    review["id"] = dealer_id
         
             json_payload = {}
             json_payload["review"] = review

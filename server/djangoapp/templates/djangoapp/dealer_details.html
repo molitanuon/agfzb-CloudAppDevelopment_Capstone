@@ -13,7 +13,8 @@
     <nav class="navbar navbar-light bg-light">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#"> Dealership Review</a>
+                <a class="navbar-brand" href="{% url 'djangoapp:index' %}"> Dealerships</a>
+                <h4> Reviews for <b>{{dealer.full_name}}</b> </h4>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 {% if user.is_authenticated %}
@@ -44,7 +45,7 @@
     </nav> 
 
     <!-- Add reviews as cards -->
-    <h4> Reviews for <b>{{dealer.full_name}}</b> </h4> <br>
+    <!-- <h4> Reviews for <b>{{dealer.full_name}}</b> </h4> <br> -->
     <div class="card-columns">
         {% for review in reviews %}
             <div class="card">
